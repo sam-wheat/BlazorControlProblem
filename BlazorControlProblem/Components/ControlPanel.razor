@@ -1,0 +1,17 @@
+﻿<input type="range" class="form-control-range"
+       min="0" max="10"
+       style="width:10vw;"
+       @onchange="OnInputChanged" />
+
+
+@code {
+
+    [Parameter] public ControlConfig Config { get; set; }
+    [Parameter] public EventCallback<ControlConfig> ConfigChanged { get; set; }
+
+    private async Task OnInputChanged(ChangeEventArgs e)
+    {
+        Config.SomeValue = e.Value.ToString();
+        await ConfigChanged.InvokeAsync(Config);
+    }
+}

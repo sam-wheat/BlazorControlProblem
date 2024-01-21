@@ -1,0 +1,43 @@
+﻿@page "/"
+
+
+<div style="display:flex;flex-direction:column;">
+    <div style="display:flex;flex-direction:column;background-color:lightyellow;padding:6px;margin:6px">
+        <MyControl2 People="CreatePeople2()" Config="Config2"></MyControl2>
+        <label>Parent reports the value of Config2.SomeValue is @Config2.SomeValue</label>
+    </div>
+
+    <div style="display:flex;flex-direction:column;background-color:lightblue;padding:6px;margin:6px">
+        <MyControl People="CreatePeople()" @bind-Config="Config"></MyControl>
+        <label>Parent reports value of Config.SomeValue is @Config.SomeValue</label>
+    </div>
+
+  
+</div>
+
+@code
+{
+    private ControlConfig Config = new();
+    private ControlConfig Config2 = new();
+    private ControlConfig Config3 = new();
+
+    private List<Person> CreatePeople()
+    {
+        return new List<Person>
+        {
+            new Person{ Name = "ERROR this text should never be shown."},
+            new Person{ Name = "ERROR this text should never be shown."},
+            new Person{ Name = "ERROR this text should never be shown."}
+        };
+    }
+
+    private List<Person> CreatePeople2()
+    {
+        return new List<Person>
+        {
+            new Person{ Name = "ERROR this text should never be shown."},
+            new Person{ Name = "ERROR this text should never be shown."},
+            new Person{ Name = "ERROR this text should never be shown."}
+        };
+    }
+}

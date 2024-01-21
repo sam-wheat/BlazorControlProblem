@@ -1,0 +1,33 @@
+﻿<input type="range" class="form-control-range"
+       min="0" max="10"
+       style="width:10vw;"
+       @onchange="OnInputChanged" />
+
+<select>
+    @foreach(Person p in People)
+    {
+        <option>@p.Name</option>
+    }
+</select>
+<label>The value of Config.SomeValue is @Config.SomeValue</label>
+
+@code {
+    // https://learn.microsoft.com/en-us/aspnet/core/blazor/components/data-binding?view=aspnetcore-8.0#binding-with-component-parameters
+    [Parameter] public List<Person> People { get; set; }
+    [Parameter] public ControlConfig Config { get; set; }
+    [Parameter] public EventCallback<ControlConfig> ConfigChanged { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        foreach (Person p in People)
+            p.Name = "Hello from MyControl";
+    }
+
+    private async Task OnInputChanged(ChangeEventArgs e)
+    {
+        Config.SomeValue = e.Value.ToString();
+        await ConfigChanged.InvokeAsync(Config);
+    }
+}
